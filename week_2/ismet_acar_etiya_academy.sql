@@ -5,6 +5,9 @@ SELECT * FROM products
 WHERE supplierID IN (1,2,3,4,5)
 ORDER BY productName
 
+-- Alternative
+SELECT * FROM products
+WHERE supplierID BETWEEN 1 AND 5;
 
 
 
