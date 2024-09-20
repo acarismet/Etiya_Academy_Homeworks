@@ -135,17 +135,14 @@ WHERE p.UnitPrice = (
 
 -- 16 - Verilen Products ve Suppliers tablolarını kullanarak tedarikçiden alınan en pahalı ürünleri listeleyin.
 
--- Simple Way
-SELECT s.CompanyName, CONCAT(p.ProductID, ' - ' ,p.ProductName), MAX(p.UnitPrice) AS ProductID_Name
-FROM Products as p
-JOIN Suppliers AS s ON s.SupplierID = p.SupplierID
-
-
--- With SubQuery
 SELECT p.ProductName, s.CompanyName, p.UnitPrice
 FROM Products AS p
-JOIN Suppliers as s ON p.SupplierID = s.SupplierID
-WHERE p.UnitPrice = (SELECT MAX(UnitPrice) FROM Products WHERE SupplierID = Products.SupplierID)
+JOIN Suppliers AS s ON p.SupplierID = s.SupplierID
+WHERE p.UnitPrice = (
+    SELECT MAX(p2.UnitPrice)
+    FROM Products AS p2
+    WHERE p2.SupplierID = p.SupplierID
+)
 
 
 
